@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Layout: barra lateral fixa no computador, barra inferior no celular; conteúdo em cartões sobre fundo rosado.
+   Tema único e claro por escolha (pedido: fundo claro em rosa, roxo e branco). */
+:root {
+  color-scheme: light;
+  --page: #fbf5f9;
+  --surface: #ffffff;
+  --ink: #2b1a35;
+  --muted: #7b6987;
+  --line: #f0e4ee;
+  --blush: #fde8f2;
+  --rose: #d9468f;
+  --lilac: #efe7fc;
+  --violet: #7a46d0;
+  --plum: #4a2463;
+
+  --alta: #dc3d4b;   --alta-bg: #fde8ea;
+  --media: #d99a12;  --media-bg: #fdf3d9;
+  --ok: #23955f;     --ok-bg: #e2f5ea;
+
+  --o-desc: #3a78c0; --o-desc-bg: #e5effa;
+  --o-conf: #a53fc6; --o-conf-bg: #f4e6fa;
+  --o-esq: #d47328;  --o-esq-bg: #fcebdc;
+  --o-int: #198f8b;  --o-int-bg: #def3f2;
+}
+
+html, body { background: var(--page); color: var(--ink); }
+body { font-family: Figtree, ui-sans-serif, system-ui, sans-serif; font-size: 15px; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { text-wrap: balance; }
+.num { font-variant-numeric: tabular-nums; }
+
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 50; background: var(--page);
+}
+
+.gutter {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+.card { background: var(--surface); border-radius: 20px; box-shadow: 0 1px 2px rgba(74,32,96,.05), 0 6px 20px -8px rgba(74,32,96,.14); }
+
+.campo {
+  width: 100%; border-radius: 14px; border: 1.5px solid var(--line); background: var(--surface);
+  padding: .7rem .9rem; color: var(--ink); transition: border-color .15s, box-shadow .15s; font-size: 15px;
+}
+.campo:focus { outline: none; border-color: var(--violet); box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 14%, transparent); }
+.campo.invalido { border-color: var(--alta); }
+textarea.campo { resize: vertical; min-height: 92px; line-height: 1.5; }
+select.campo { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.2rem; }
+
+.rotulo { display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--plum); margin-bottom: .4rem; }
+
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--violet) 45%, transparent); outline-offset: 2px; }
+
+@keyframes subir { from { opacity: .4; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes surgir { from { opacity: 0; transform: scale(.97) translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes girar { to { transform: rotate(360deg); } }
+.anim-subir { animation: subir .35s ease-out both; }
+.anim-surgir { animation: surgir .22s ease-out both; }
+.girando { animation: girar 1s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+.rolagem-fina::-webkit-scrollbar { height: 6px; width: 6px; }
+.rolagem-fina::-webkit-scrollbar-thumb { background: var(--line); border-radius: 6px; }
+
+/* itens de grade podem encolher: texto longo trunca em vez de alargar a página */
+.grid > * { min-width: 0; }
